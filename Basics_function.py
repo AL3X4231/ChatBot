@@ -27,7 +27,7 @@ def president():
 
 
 for i in range(len(listfiles)):
-    ponctuation=['!','"','#','$','%','&','x²','()','*','+',',','- ','.','/',':',';','<','=','>','?','@','[',']','^','_','`','{','|','}','~']
+    ponctuation=['!','"','#','$','%','&','x²','()','*','+',',','- ','.','/',':',';','<','=','>','?','@','[',']','^','_','`','{','|','}','~','\n']
     file=open('speeches/'+listfiles[i],"r",encoding='utf8')
     lignes=file.readlines()
     texte_minuscule=''
@@ -40,7 +40,7 @@ for i in range(len(listfiles)):
             else:
                 texte_minuscule+=k.lower()
 
-    f = open(f"cleaned/{listfiles[i]}", "w")
+    f = open(f"cleaned/{listfiles[i]}", "w",encoding='utf8')
     f.write(texte_minuscule)
 
         
