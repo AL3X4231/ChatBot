@@ -35,7 +35,7 @@ def idf(mot):
             if mot in list_txt[i]:
                 try:IDF[mot]+=1
                 except:IDF[mot]=1
-        IDF[mot]=math.log(len(list_txt)/(IDF[mot]))
+        IDF[mot]=math.log(len(list_txt)/(IDF[mot]),10)
             
  
 
