@@ -105,8 +105,21 @@ def fonctionnalité3():
     return word
 
 
+def mots_communs_presidents():
+    mots_presidents = {}
+    repertoire='cleaned'
+    for fichier in os.listdir(repertoire):
+        if fichier.endswith(".txt"):
+            chemin_fichier = os.path.join(repertoire, fichier)
 
+            with open(chemin_fichier, "r", encoding="utf8") as document:
+                contenu = document.read()
 
+            mots = set(contenu.split())
 
-
-print(fonctionnalité3())
+            if not mots_presidents:
+                mots_presidents = mots
+            else:
+                mots_presidents = mots_presidents.intersection(mots)
+    
+    return mots_presidents
