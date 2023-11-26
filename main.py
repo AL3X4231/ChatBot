@@ -31,7 +31,7 @@ while True:
         if choice==4:
 
             word=input('Choisissez un mot a chercher:\n>>')
-            listepres=(mostspoke(word,listfiles,IDF('cleaned'),matrix()))    ###call mostspoke (in fonctionnality.py, line 58) take in parameter the IDF dict of the corpus a chosen word be the user the matrice and the list of files and return a dict
+            listepres=(mostspoke(word,listfiles))   ###call mostspoke (in fonctionnality.py, line 58) take in parameter the IDF dict of the corpus a chosen word be the user the matrice and the list of files and return a dict
             if listepres==False:
                 print('No one speak about it sorry :(')   
             else:
@@ -49,11 +49,11 @@ while True:
 
         if choice==5:
 
-            climat=mostspoke('climat',listfiles,IDF('cleaned'),matrix())   ### mostspoke again
+            climat=mostspoke('climat',listfiles)   ### mostspoke again
             first=firstone(climat)
             print(f'The first who spoke about climat is {first}')
 
-            ecology=mostspoke('écologie',listfiles,IDF('cleaned'),matrix())
+            ecology=mostspoke('écologie',listfiles)
             first=firstone(ecology)
             if ecology==False:
                 res='No one speak about ecology'
