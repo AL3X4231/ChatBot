@@ -1,3 +1,5 @@
+from test import *
+
 def leastimportant(matrix,format):
     leastimp=[]
     res='The least important word are : \n'
@@ -35,6 +37,23 @@ def highest_tfidf(matrix):
     return res
 
 #matrix={'voiture5':[1,2,3,5],'voiture4':[9,8,3,4],'voiture3':[9,2,3,4],'voiture2':[9,2,7,4],'voiture1':[10,0,3,4]}
+
+def mostrepeated():
+    with open("cleaned/Nomination_Chirac1.txt","r",encoding='utf8') as document1:
+        sentence1=document1.read()
+    with open("cleaned/Nomination_Chirac2.txt","r",encoding='utf8') as document2:
+        sentence2=document2.read()
+    sentence=Tf(sentence1+sentence2)
+    max=0
+    word=[]
+    for i,j in sentence.items():
+        if j>max:
+            max=j
+            word=[i]
+        elif j==max:
+            word.append(i)
+    return word
+
 
 def mostspoke(word,list_files,idf,matrix):
         spoke={}
@@ -88,24 +107,47 @@ def mostspoke(word,list_files,idf,matrix):
 
 def firstone(dico):
     if dico==False:
-        return ('no one')
-    for dico in dico.keys():
-        if 'Macron' in dico:
-            first='macron'
-        elif 'Hollande' in dico:
-            first='Hollande'
-        elif 'Sarkozy' in dico:
-            first='Sarkory'
-        elif 'Mitterand' in dico:
-            first='Mitterand'
-        elif 'Giscard' in dico:
-            first='Giscard'
-        else:first='pas trouver'
-    return(first)
+        first=False
+    else:
+        for dico in dico.keys():
+            if 'Macron' in dico:
+                first='macron'
+            elif 'Hollande' in dico:
+                first='Hollande'
+            elif 'Sarkozy' in dico:
+                first='Sarkory'
+            elif 'Mitterand' in dico:
+                first='Mitterand'
+            elif 'Giscard' in dico:
+                first='Giscard'
+        return(first)
 
 
 
+def mots_communs_presidents():
+    mots_presidents = {}
+    repertoire='cleaned'
+    for fichier in os.listdir(repertoire):
+        if fichier.endswith(".txt"):
+            chemin_fichier = os.path.join(repertoire, fichier)
 
+            with open(chemin_fichier, "r", encoding="utf8") as document:
+                contenu = document.read()
+
+            mots = set(contenu.split())
+
+            if not mots_presidents:
+                mots_presidents = mots
+            else:
+                mots_presidents = mots_presidents.intersection(mots)
+    return(mots_presidents)
+   
+   
+    # leastimportant_list = leastimportant(matrix(),'list')
+    # for i in mots_presidents:
+    #     if i in leastimportant_list:
+    #         mots_presidents.remove(i)
+    # return mots_presidents
         
     
 

@@ -87,43 +87,9 @@ def matrix():
 
     return matrice
 
-def fonctionnalité3():
-    with open("cleaned/Nomination_Chirac1.txt","r",encoding='utf8') as document1:
-        sentence1=document1.read()
-    with open("cleaned/Nomination_Chirac2.txt","r",encoding='utf8') as document2:
-        sentence2=document2.read()
-    sentence=Tf(sentence1+sentence2)
-    max=0
-    word=[]
-    for i,j in sentence.items():
-        if j>max:
-            max=j
-            word=[i]
-        elif j==max:
-            word.append(i)
-    return word
 
 
-def mots_communs_presidents():
-    mots_presidents = {}
-    repertoire='cleaned'
-    for fichier in os.listdir(repertoire):
-        if fichier.endswith(".txt"):
-            chemin_fichier = os.path.join(repertoire, fichier)
 
-            with open(chemin_fichier, "r", encoding="utf8") as document:
-                contenu = document.read()
 
-            mots = set(contenu.split())
-
-            if not mots_presidents:
-                mots_presidents = mots
-            else:
-                mots_presidents = mots_presidents.intersection(mots)
-    leastimportant = leastimportant()
-    for i in mots_presidents:
-        if i in leastimportant:
-            mots_presidents.remove(i)
-    return mots_presidents
         
 
