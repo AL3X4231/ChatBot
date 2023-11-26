@@ -87,26 +87,4 @@ def matrix():
 
     return matrice
 
-
-def fonctionnalité3():
-    with open("cleaned/Nomination_Chirac1.txt","r",encoding='utf8') as document1:
-        sentence1=document1.read()
-    with open("cleaned/Nomination_Chirac2.txt","r",encoding='utf8') as document2:
-        sentence2=document2.read()
-    sentence=Tf(sentence1+sentence2)
-    max=0
-    word=[]
-    for i,j in sentence.items():
-        if j>max:
-            max=j
-            word=[i]
-        elif j==max:
-            word.append(i)
-    return word
-
-
-
-
-
-
-print(fonctionnalité3())
+print(matrix())
