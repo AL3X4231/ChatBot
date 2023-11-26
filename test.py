@@ -87,7 +87,6 @@ def matrix():
 
     return matrice
 
-
 def fonctionnalité3():
     with open("cleaned/Nomination_Chirac1.txt","r",encoding='utf8') as document1:
         sentence1=document1.read()
@@ -123,3 +122,4 @@ def mots_communs_presidents():
                 mots_presidents = mots_presidents.intersection(mots)
     
     return mots_presidents
+
