@@ -1,4 +1,4 @@
-from test import *
+from TFIDF import *
 
 def leastimportant(matrix,format):
     leastimp=[]
@@ -36,7 +36,6 @@ def highest_tfidf(matrix):
     res=f'The word with the highest TF-IDF score is : {maxword}with a TF-IDF={maxvalue}'
     return res
 
-#matrix={'voiture5':[1,2,3,5],'voiture4':[9,8,3,4],'voiture3':[9,2,3,4],'voiture2':[9,2,7,4],'voiture1':[10,0,3,4]}
 
 def mostrepeated():
     with open("cleaned/Nomination_Chirac1.txt","r",encoding='utf8') as document1:
@@ -55,13 +54,14 @@ def mostrepeated():
     return word
 
 
-def mostspoke(word,list_files,idf,matrix):
+def mostspoke(word,list_files):
+        idf=IDF('cleaned')
+        matrice=matrix()
         spoke={}
         if word not in idf:
             return(False)
         if idf[word]!=0:
-            print('true')
-            liste=matrix[word]
+            liste=matrice[word]
             for i in range(len(liste)-1):
                 
                 if liste[i]!=0:
@@ -124,30 +124,8 @@ def firstone(dico):
 
 
 
-def mots_communs_presidents():
-    mots_presidents = {}
-    repertoire='cleaned'
-    for fichier in os.listdir(repertoire):
-        if fichier.endswith(".txt"):
-            chemin_fichier = os.path.join(repertoire, fichier)
-
-            with open(chemin_fichier, "r", encoding="utf8") as document:
-                contenu = document.read()
-
-            mots = set(contenu.split())
-
-            if not mots_presidents:
-                mots_presidents = mots
-            else:
-                mots_presidents = mots_presidents.intersection(mots)
-    return(mots_presidents)
    
-   
-    # leastimportant_list = leastimportant(matrix(),'list')
-    # for i in mots_presidents:
-    #     if i in leastimportant_list:
-    #         mots_presidents.remove(i)
-    # return mots_presidents
+  
         
     
 

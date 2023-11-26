@@ -10,6 +10,7 @@ Welcome to My First ChatBot, a Python project based on text analysis and the TF-
 - `cleaned/`: Folder containing processed text files.
 - `speeches/`: Folder containing original text files of presidential speeches.
 - `README.txt`: This file.
+-
 
 ## Prerequisites
 

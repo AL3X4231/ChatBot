@@ -1,55 +1,95 @@
+import os
 import math
-from Basics_function import *
+from collections import defaultdict
 
-iteration_total={}
-IDF={}
-TF_IDF={}
-list_txt = os.listdir(path="cleaned")
 
-def tf(files):
-    txt=open(f"cleaned/{files}", "r",encoding='utf8').readlines()[0]
-    i=0
-    while i<len(txt):
-        mot=''
-        if txt[i]==' ':
-            i=i+1
+def Tf(sentence):
+
+    words = sentence.split()
+
+    word_dict = {}
+
+    for word in words:
+        if word in word_dict:
+            word_dict[word]+=1
         else:
-            while txt[i]!=' 'and i<len(txt):
-                mot+=txt[i]
-                i=i+1
-                if i==len(txt):
-                    break
-            try:
-                iteration_total[mot]+=1
-            except:
-                iteration_total[mot]=1
-            idf(mot,txt)
+            word_dict[word]=1
+    return word_dict
 
-def idf(mot,txt):
-    print(len(txt))
-    try:
-        IDF[mot]
-    except:
-        for i in range(len(txt)-1):
-            if mot in txt:
-                try:IDF[mot]+=1
-                except:IDF[mot]=1
+
+
+def IDF(directory):
+    documents=os.listdir(directory)
+    nb_fichier = len(documents)  # Correction ici, utiliser 'docs' au lieu de 'fichier'
+
+    count_doc = defaultdict(int)
+    idf_scores = defaultdict(float)
+
+    for doc in documents:
+        with open(os.path.join(directory, doc), "r",encoding='utf8') as f:
+            content = f.read()
+            words = content.split()
+
+        unique_words = set(words)
+        for word in unique_words:
+            count_doc[word] += 1
+    for word, count in count_doc.items():
+        if count != 0:
+            idf_scores[word] =(math.log10(nb_fichier / (count+1)))
+            if idf_scores[word]<0:
+                idf_scores[word]=0
+    
+    return(idf_scores)
+
+
+
+def TFIDF(directory):
+    
+    documents = os.listdir(directory)
+    score_tfidf={}
+
+    idf_scores = IDF(directory)
+    
+    for doc in documents:
+        with open(f"cleaned/{doc}","r",encoding='utf8') as document:
+            sentence=document.read()
+
+        tf_scores = Tf(sentence)
+        tfidf_doc={}
         
-        IDF[mot]=math.log10(len(txt)/(IDF[mot]))
+        for word, tf_score in tf_scores.items():
+            if word in idf_scores:
+                tfidf_doc[word] = round(tf_score * idf_scores[word],5)
+            else:
+                tfidf_doc[word] = 0
+        
+        score_tfidf[doc] = tfidf_doc
+    
+    return score_tfidf
+
+    
+def matrix():
+    score_tfidf = TFIDF('cleaned') 
+
+    matrice = {}
+
+    for value in score_tfidf.values():
+        for word in value.keys():
+            if word not in matrice:
+                matrice[word]=[]
+    
+    for i in matrice.keys():
+        for value in score_tfidf.values():
+            if i in value:
+                matrice[i].append(value[i])
+            else:
+                matrice[i].append(0)
+
+    return matrice
+
+
+
+
+
         
 
-def tfidf():
-    for i in range(len(list_txt)-1):
-        tf(list_txt[i])
-    for i in IDF.keys():
-        TF_IDF[i]=IDF[i]*iteration_total[i]
-    return(TF_IDF)
-
-TFIDF=tfidf()
-print(TFIDF)
-print('Important word :')
-for i,y in TFIDF.items():
-    #print(i,end=' ')
-    #print(y)
-    if y>=1:
-        print(i,end=' ')
