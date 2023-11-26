@@ -35,10 +35,11 @@ def IDF(directory):
             count_doc[word] += 1
     for word, count in count_doc.items():
         if count != 0:
-            idf_scores[word] = round(math.log10(nb_fichier / count) + 1, 5)
+            idf_scores[word] =(math.log10(nb_fichier / (count+1)))
+            if idf_scores[word]<0:
+                idf_scores[word]=0
     
     return(idf_scores)
-
 
 
 
@@ -58,7 +59,7 @@ def TFIDF(directory):
         
         for word, tf_score in tf_scores.items():
             if word in idf_scores:
-                tfidf_doc[word] = tf_score * idf_scores[word]
+                tfidf_doc[word] = round(tf_score * idf_scores[word],5)
             else:
                 tfidf_doc[word] = 0
         
@@ -66,15 +67,24 @@ def TFIDF(directory):
     
     return score_tfidf
 
+    
+def matrix():
+    score_tfidf = TFIDF('cleaned') 
 
-    
-print(TFIDF('cleaned'))  
-    
-    
-    
-    #for word,score in (IDF(directory)).items():
-        
-        
-        #score_tfidf[word]=score*(Tf(all_sentences)[word])
+    matrice = {}
 
+    for value in score_tfidf.values():
+        for word in value.keys():
+            if word not in matrice:
+                matrice[word]=[]
     
+    for i in matrice.keys():
+        for value in score_tfidf.values():
+            if i in value:
+                matrice[i].append(value[i])
+            else:
+                matrice[i].append(0)
+
+    return matrice
+
+print(matrix())
