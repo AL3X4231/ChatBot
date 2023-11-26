@@ -17,15 +17,38 @@ while True:
     mat=matrix()
     if isinstance(choice, int) and 0<choice<7:
         if choice==1:
-            print(leastimportant(matrix(),'string'))
+
+            print(leastimportant(matrix(),format='string'))
         if choice==2:
+
             print(highest_tfidf(matrix()))
         if choice==3:
+
             print(leastimportant())
         if choice==4:
-            print(mostspoke('nation',listfiles,IDF('cleaned'),matrix()))
+            word=input('Choisissez un mot a chercher:\n>>')
+            listepres=(mostspoke(word,listfiles,IDF('cleaned'),matrix()))
+            if listepres==False:
+                print('No one speak about it sorry :(')
+            else:
+                strpres=''
+                maxvalue=''
+                max=0
+                for keys,tfidf in listepres.items():
+                    strpres+=keys+', '
+                    if tfidf>max: 
+                        max=tfidf 
+                        maxvalue=keys
+                print(f'les presidents ayant parler de {word} sont {strpres}\n Celui qui en a le plus parler est {maxvalue}')
         if choice==5:
-            print(leastimportant(matrix=0))
+            climat=mostspoke('climat',listfiles,IDF('cleaned'),matrix())
+            print(climat)
+            first=firstone(climat)
+            print(f'The first who spoke abput climat is {first}')
+            ecology=mostspoke('écologie',listfiles,IDF('cleaned'),matrix())
+            print(ecology)
+            first=firstone(ecology)
+            print(f'The first who spoke abput climat is {first}')
         if choice==6:
             print(leastimportant(matrix=0))
         othqs=input('Do you want to ask another qst ? Type y or n\n>>')

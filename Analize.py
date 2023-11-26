@@ -8,6 +8,7 @@ def leastimportant(matrix,format):
         if total==0:
             leastimp.append(i)
             res+=(str(i)+', ')
+
     if format=='string':
         return(res)
     else:
@@ -36,40 +37,72 @@ def highest_tfidf(matrix):
 #matrix={'voiture5':[1,2,3,5],'voiture4':[9,8,3,4],'voiture3':[9,2,3,4],'voiture2':[9,2,7,4],'voiture1':[10,0,3,4]}
 
 def mostspoke(word,list_files,idf,matrix):
-        spoke=[]
+        spoke={}
+        if word not in idf:
+            return(False)
         if idf[word]!=0:
             print('true')
             liste=matrix[word]
             for i in range(len(liste)-1):
                 
                 if liste[i]!=0:
-                    
-                    spoke.append(list_files[i])
-        list_president=[]
-        for i in spoke:
+                    if list_files[i] not in spoke:
+                        spoke[list_files[i]]=liste[i]
+                    else:
+                        spoke[list_files]+=liste[i]
+        list_president={}
+        for i,y in spoke.items():
             if "Chirac" in i:
                 if "Jacques Chirac" not in list_president:
-                    list_president.append("Jacques Chirac")
+                    list_president["Jacques Chirac"]=y
+                else:
+                    list_president["Jacques Chirac"]+=y
             elif "Giscard dEstaing" in i:
                 if "Valérie Giscard dEstaing" not in list_president:
-                    list_president.append("Valérie Giscard dEstaing")
+                    list_president["Valérie Giscard dEstaing"]=y
+                else:
+                    list_president["Valérie Giscard dEstaing"]+=y
             elif "Hollande" in i:
                 if "François Hollande" not in list_president:
-                    list_president.append("François Hollande")
+                    list_president["François Hollande"]=y
+                else:
+                    list_president["François Hollande"]+=y
             elif "Macron" in i:
                 if "Emmanuel Macron" not in list_president:
-                    list_president.append("Emmanuel Macron")
+                    
+                    list_president["Emmanuel Macron"]=y
+                else:
+                    list_president["Emmanuel Macron"]+=y
             elif "Mitterand" in i:
                 if "François Mitterand" not in list_president:
-                    list_president.append("François Mitterand")
+                    list_president["François Mitterand"]=y
+                else:
+                    list_president["François Mitterand"]+=y
             elif "Sarkozy" in i:
                 if "Nicolas Sarkozy" not in list_president:
-                    list_president.append("Nicolas Sarkozy")
-            
-        return(spoke)
+                    list_president["Nicolas Sarkozy"]=y
+                else:
+                    list_president["Nicolas Sarkozy"]+=y    
+        return(list_president)
 
 
-        
+def firstone(dico):
+    if dico==False:
+        return ('no one')
+    for dico in dico.keys():
+        if 'Macron' in dico:
+            first='macron'
+        elif 'Hollande' in dico:
+            first='Hollande'
+        elif 'Sarkozy' in dico:
+            first='Sarkory'
+        elif 'Mitterand' in dico:
+            first='Mitterand'
+        elif 'Giscard' in dico:
+            first='Giscard'
+        else:first='pas trouver'
+    return(first)
+
 
 
 
