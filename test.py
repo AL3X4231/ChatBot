@@ -120,6 +120,10 @@ def mots_communs_presidents():
                 mots_presidents = mots
             else:
                 mots_presidents = mots_presidents.intersection(mots)
-    
+    leastimportant = leastimportant()
+    for i in mots_presidents:
+        if i in leastimportant:
+            mots_presidents.remove(i)
     return mots_presidents
+        
 
