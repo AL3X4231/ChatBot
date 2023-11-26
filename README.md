@@ -19,7 +19,7 @@ Welcome to My First ChatBot, a Python project based on text analysis and the TF-
 ## Installation
 
 1. Clone the repository: `git clone https://github.com/AL3X4231/ChatBot`
-2. Navigate to the project directory: `cd MyFirstChatBot`
+2. Navigate to the project directory: `cd ChatBot`
 3. Run the main program: `python main.py`
 
 ## Features
@@ -47,8 +47,4 @@ Run the main program `main.py` and follow the menu instructions to access differ
 
 ## Contact
 
-For questions or issues, contact [your name] at [your email address].
-
-## License
-
-This project is licensed under the [license type].
+For questions or issues, contact Alexandre Morin at alexandre.morin@efrei.net and Timothée Robin at timothee.robin@efrei.net.
