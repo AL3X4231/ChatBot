@@ -46,6 +46,7 @@ def tfidf():
     return(TF_IDF)
 
 TFIDF=tfidf()
+print(TFIDF)
 print('Important word :')
 for i,y in TFIDF.items():
     #print(i,end=' ')

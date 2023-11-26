@@ -1,6 +1,6 @@
 from Basics_function import *
 import time
-
+from Analize import *
 
 present="""Hi I'm your virtual assistant, I've analised serveral speeches of the following president :"""
 for i in range(len(president())):
@@ -14,8 +14,18 @@ menu="[1] Display the most important word \n[2] Display the word(s) with the hig
 while True:
     choice=int(input(menu))
     if isinstance(choice, int) and 0<choice<7:
-        #print(fonction[choice])
-        print('blablablablablablablabla')
+        if choice==1:
+            print(leastimportant(matrix=0))
+        if choice==2:
+            print(leastimportant(matrix=0))
+        if choice==3:
+            print(leastimportant(matrix=0))
+        if choice==4:
+            print(leastimportant(matrix=0))
+        if choice==5:
+            print(leastimportant(matrix=0))
+        if choice==6:
+            print(leastimportant(matrix=0))
         othqs=input('Do you want to ask another qst ? Type y or n\n>>')
         while othqs!='y' and othqs!='n':
             othqs=input('Retry wrong input \n>>')
