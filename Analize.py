@@ -1,4 +1,4 @@
-def leastimportant(matrix):
+def leastimportant(matrix,format):
     leastimp=[]
     res='The least important word are : \n'
     for i,y in matrix.items():
@@ -8,8 +8,10 @@ def leastimportant(matrix):
         if total==0:
             leastimp.append(i)
             res+=(str(i)+', ')
-            
-    return(res)
+    if format=='string':
+        return(res)
+    else:
+        return(leastimp)
 
 def highest_tfidf(matrix):
     max={'':0}
@@ -43,6 +45,27 @@ def mostspoke(word,list_files,idf,matrix):
                 if liste[i]!=0:
                     
                     spoke.append(list_files[i])
+        list_president=[]
+        for i in spoke:
+            if "Chirac" in i:
+                if "Jacques Chirac" not in list_president:
+                    list_president.append("Jacques Chirac")
+            elif "Giscard dEstaing" in i:
+                if "Valérie Giscard dEstaing" not in list_president:
+                    list_president.append("Valérie Giscard dEstaing")
+            elif "Hollande" in i:
+                if "François Hollande" not in list_president:
+                    list_president.append("François Hollande")
+            elif "Macron" in i:
+                if "Emmanuel Macron" not in list_president:
+                    list_president.append("Emmanuel Macron")
+            elif "Mitterand" in i:
+                if "François Mitterand" not in list_president:
+                    list_president.append("François Mitterand")
+            elif "Sarkozy" in i:
+                if "Nicolas Sarkozy" not in list_president:
+                    list_president.append("Nicolas Sarkozy")
+            
         return(spoke)
 
 

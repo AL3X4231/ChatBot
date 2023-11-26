@@ -17,7 +17,7 @@ while True:
     mat=matrix()
     if isinstance(choice, int) and 0<choice<7:
         if choice==1:
-            print(leastimportant(matrix()))
+            print(leastimportant(matrix(),'string'))
         if choice==2:
             print(highest_tfidf(matrix()))
         if choice==3:
