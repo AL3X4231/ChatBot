@@ -2,6 +2,7 @@ import os
 import math
 from collections import defaultdict
 
+listfilescleaned = os.listdir(path="cleaned")
 
 def Tf(sentence):
 
@@ -15,7 +16,6 @@ def Tf(sentence):
         else:
             word_dict[word]=1
     return word_dict
-
 
 
 def IDF(directory):
