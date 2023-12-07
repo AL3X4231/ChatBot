@@ -64,7 +64,7 @@ while True:
 
         if choice==6:
             print('Common word between all presidents :')
-            print('En cours de réalisation')
+            mot_commun(listfiles)
 
         othqs=input('Do you want to ask another qst ? Type y or n\n>>')  ###Ask the user if he want to ask another qst
         while othqs!='y' and othqs!='n':         
@@ -80,9 +80,3 @@ while True:
     if kill=='q':
         break
     print('Wrong input')
-
-
-
-    
-        
-    

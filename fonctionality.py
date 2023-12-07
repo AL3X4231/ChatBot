@@ -123,6 +123,8 @@ def firstone(dico):
         return(first)
 
 
+def mot_commun(listfiles):
+    
 
    
   
