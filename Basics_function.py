@@ -42,3 +42,4 @@ for i in range(len(listfiles)):
 
     f = open(f"cleaned/{listfiles[i]}", "w",encoding='utf8')
     f.write(texte_minuscule)
+    f.close()

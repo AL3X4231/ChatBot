@@ -125,7 +125,7 @@ def firstone(dico):
 
 
 
-def mot_commun():
+def commun_words_between_presidents():
         listefilescleaned=os.listdir('cleaned')
         with open(f'cleaned/{listefilescleaned[0]}',"r",encoding='utf8') as document1:
             sentence0=document1.read()
@@ -149,7 +149,6 @@ def mot_commun():
             sentence4=document1.read()
         with open(f'cleaned/{listefilescleaned[7]}',"r",encoding='utf8') as document1:
             sentence5=document1.read()
-        
         
         exemple=Tf(sentence5)
         all_sentence=[sentence,sentence1,sentence2,sentence3,sentence4]
