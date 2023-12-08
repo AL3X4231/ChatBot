@@ -124,9 +124,12 @@ def firstone(dico):
 
 
 
-def mots_communs_presidents():
+import os
+
+def mots_communs_presidents(repertoire):
     mots_presidents = {}
-    repertoire='cleaned'
+
+    # Parcourir les fichiers dans le répertoire
     for fichier in os.listdir(repertoire):
         if fichier.endswith(".txt"):
             chemin_fichier = os.path.join(repertoire, fichier)
@@ -134,14 +137,24 @@ def mots_communs_presidents():
             with open(chemin_fichier, "r", encoding="utf8") as document:
                 contenu = document.read()
 
+            # Tokeniser les mots
             mots = set(contenu.split())
 
+            # Mettre à jour les mots communs pour chaque président
             if not mots_presidents:
                 mots_presidents = mots
             else:
                 mots_presidents = mots_presidents.intersection(mots)
-    return(mots_presidents)
-   
+
+    return mots_presidents
+
+# Appel de la fonction avec le répertoire contenant les documents de chaque président
+repertoire_presidents = "cleaned"
+resultat = mots_communs_presidents(repertoire_presidents)
+
+# Affichage des résultats
+print("Les mots évoqués par tous les présidents sont :", resultat)
+
    
     # leastimportant_list = leastimportant(matrix(),'list')
     # for i in mots_presidents:
