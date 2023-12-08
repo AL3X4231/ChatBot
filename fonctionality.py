@@ -1,4 +1,4 @@
-from test import *
+from TFIDF import *
 
 def leastimportant(matrix,format):
     leastimp=[]
@@ -36,7 +36,6 @@ def highest_tfidf(matrix):
     res=f'The word with the highest TF-IDF score is : {maxword}with a TF-IDF={maxvalue}'
     return res
 
-#matrix={'voiture5':[1,2,3,5],'voiture4':[9,8,3,4],'voiture3':[9,2,3,4],'voiture2':[9,2,7,4],'voiture1':[10,0,3,4]}
 
 def mostrepeated():
     with open("cleaned/Nomination_Chirac1.txt","r",encoding='utf8') as document1:
@@ -55,13 +54,14 @@ def mostrepeated():
     return word
 
 
-def mostspoke(word,list_files,idf,matrix):
+def mostspoke(word,list_files):
+        idf=IDF('cleaned')
+        matrice=matrix()
         spoke={}
         if word not in idf:
             return(False)
         if idf[word]!=0:
-            print('true')
-            liste=matrix[word]
+            liste=matrice[word]
             for i in range(len(liste)-1):
                 
                 if liste[i]!=0:
@@ -161,6 +161,47 @@ print("Les mots évoqués par tous les présidents sont :", resultat)
     #     if i in leastimportant_list:
     #         mots_presidents.remove(i)
     # return mots_presidents
-        
-    
 
+def mot_commun(listefilescleaned):
+        with open(f'cleaned/{listefilescleaned[0]}',"r",encoding='utf8') as document1:
+            sentence0=document1.read()
+        with open(f'cleaned/{listefilescleaned[1]}',"r",encoding='utf8') as document2:
+            sentence1=document2.read()
+        sentence=sentence0+sentence1
+        
+        with open(f'cleaned/{listefilescleaned[5]}',"r",encoding='utf8') as document1:
+            sentence1=document1.read()
+        with open(f'cleaned/{listefilescleaned[6]}',"r",encoding='utf8') as document2:
+            sentence2=document2.read()
+        sentence1=sentence1+sentence2
+        
+        
+        with open(f'cleaned/{listefilescleaned[2]}',"r",encoding='utf8') as document1:
+            sentence2=document1.read()
+            
+        with open(f'cleaned/{listefilescleaned[3]}',"r",encoding='utf8') as document1:
+            sentence3=document1.read()
+        with open(f'cleaned/{listefilescleaned[4]}',"r",encoding='utf8') as document1:
+            sentence4=document1.read()
+        with open(f'cleaned/{listefilescleaned[7]}',"r",encoding='utf8') as document1:
+            sentence5=document1.read()
+        
+        
+        exemple=Tf(sentence5)
+        all_sentence=[sentence,sentence1,sentence2,sentence3,sentence4]
+        
+        commun_words=[]
+        for i in exemple.keys():
+            occurence=0
+            for j in all_sentence:
+                if i in Tf(j):
+                    occurence+=1
+            if occurence==5:
+                commun_words.append(i)
+        return(commun_words)
+                    
+            
+            
+            
+            
+print(mot_commun(listfilescleaned))
