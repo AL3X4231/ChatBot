@@ -63,8 +63,8 @@ while True:
 
 
         if choice==6:
-            print('Common word between all presidents :')
-            mot_commun(listfiles)
+            print('Common word between all presidents :',mot_commun())
+            
 
         othqs=input('Do you want to ask another qst ? Type y or n\n>>')  ###Ask the user if he want to ask another qst
         while othqs!='y' and othqs!='n':         

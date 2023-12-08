@@ -123,7 +123,10 @@ def firstone(dico):
                 first='Giscard'
         return(first)
 
-def mot_commun(listefilescleaned):
+
+
+def mot_commun():
+        listefilescleaned=os.listdir('cleaned')
         with open(f'cleaned/{listefilescleaned[0]}',"r",encoding='utf8') as document1:
             sentence0=document1.read()
         with open(f'cleaned/{listefilescleaned[1]}',"r",encoding='utf8') as document2:
