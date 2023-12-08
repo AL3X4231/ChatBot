@@ -126,34 +126,34 @@ def firstone(dico):
 
 import os
 
-def mots_communs_presidents(repertoire):
-    mots_presidents = {}
+# def mots_communs_presidents(repertoire):
+#     mots_presidents = {}
 
-    # Parcourir les fichiers dans le répertoire
-    for fichier in os.listdir(repertoire):
-        if fichier.endswith(".txt"):
-            chemin_fichier = os.path.join(repertoire, fichier)
+#     # Parcourir les fichiers dans le répertoire
+#     for fichier in os.listdir(repertoire):
+#         if fichier.endswith(".txt"):
+#             chemin_fichier = os.path.join(repertoire, fichier)
 
-            with open(chemin_fichier, "r", encoding="utf8") as document:
-                contenu = document.read()
+#             with open(chemin_fichier, "r", encoding="utf8") as document:
+#                 contenu = document.read()
 
-            # Tokeniser les mots
-            mots = set(contenu.split())
+#             # Tokeniser les mots
+#             mots = set(contenu.split())
 
-            # Mettre à jour les mots communs pour chaque président
-            if not mots_presidents:
-                mots_presidents = mots
-            else:
-                mots_presidents = mots_presidents.intersection(mots)
+#             # Mettre à jour les mots communs pour chaque président
+#             if not mots_presidents:
+#                 mots_presidents = mots
+#             else:
+#                 mots_presidents = mots_presidents.intersection(mots)
 
-    return mots_presidents
+#     return mots_presidents
 
-# Appel de la fonction avec le répertoire contenant les documents de chaque président
-repertoire_presidents = "cleaned"
-resultat = mots_communs_presidents(repertoire_presidents)
+# # Appel de la fonction avec le répertoire contenant les documents de chaque président
+# repertoire_presidents = "cleaned"
+# resultat = mots_communs_presidents(repertoire_presidents)
 
 # Affichage des résultats
-print("Les mots évoqués par tous les présidents sont :", resultat)
+#print("Les mots évoqués par tous les présidents sont :", resultat)
 
    
     # leastimportant_list = leastimportant(matrix(),'list')
@@ -198,6 +198,10 @@ def mot_commun(listefilescleaned):
                     occurence+=1
             if occurence==5:
                 commun_words.append(i)
+        leastimportante=leastimportant(matrix(),'list')
+        for i in leastimportante:
+            if i in commun_words:
+                commun_words.remove(i)
         return(commun_words)
                     
             
