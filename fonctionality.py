@@ -12,6 +12,7 @@ def leastimportant(matrix,format):
             res+=(str(i)+', ')
 
     if format=='string':
+        res=res[:-2]
         return(res)
     else:
         return(leastimp)
@@ -122,46 +123,6 @@ def firstone(dico):
                 first='Giscard'
         return(first)
 
-
-
-import os
-
-# def mots_communs_presidents(repertoire):
-#     mots_presidents = {}
-
-#     # Parcourir les fichiers dans le répertoire
-#     for fichier in os.listdir(repertoire):
-#         if fichier.endswith(".txt"):
-#             chemin_fichier = os.path.join(repertoire, fichier)
-
-#             with open(chemin_fichier, "r", encoding="utf8") as document:
-#                 contenu = document.read()
-
-#             # Tokeniser les mots
-#             mots = set(contenu.split())
-
-#             # Mettre à jour les mots communs pour chaque président
-#             if not mots_presidents:
-#                 mots_presidents = mots
-#             else:
-#                 mots_presidents = mots_presidents.intersection(mots)
-
-#     return mots_presidents
-
-# # Appel de la fonction avec le répertoire contenant les documents de chaque président
-# repertoire_presidents = "cleaned"
-# resultat = mots_communs_presidents(repertoire_presidents)
-
-# Affichage des résultats
-#print("Les mots évoqués par tous les présidents sont :", resultat)
-
-   
-    # leastimportant_list = leastimportant(matrix(),'list')
-    # for i in mots_presidents:
-    #     if i in leastimportant_list:
-    #         mots_presidents.remove(i)
-    # return mots_presidents
-
 def mot_commun(listefilescleaned):
         with open(f'cleaned/{listefilescleaned[0]}',"r",encoding='utf8') as document1:
             sentence0=document1.read()
@@ -203,9 +164,3 @@ def mot_commun(listefilescleaned):
             if i in commun_words:
                 commun_words.remove(i)
         return(commun_words)
-                    
-            
-            
-            
-            
-print(mot_commun(listfilescleaned))
