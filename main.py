@@ -1,5 +1,4 @@
 ### Import the other .py 
-from Basics_function import *
 from fonctionality import *
 
 
