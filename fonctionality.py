@@ -2,7 +2,6 @@ from TFIDF import *
 import os 
 import re
 
-
 listfiles = os.listdir(path="speeches")
 def president():
 
