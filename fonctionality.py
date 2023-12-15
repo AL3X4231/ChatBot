@@ -100,7 +100,6 @@ def mostrepeated():
             word.append(i)
     return word
 
-
 def mostspoke(word,list_files):
         idf=IDF('cleaned')
         matrice=matrix()
