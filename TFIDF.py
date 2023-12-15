@@ -59,7 +59,7 @@ def TFIDF(directory):
         
         for word, tf_score in tf_scores.items():
             if word in idf_scores:
-                tfidf_doc[word] = round(tf_score * idf_scores[word],5)
+                tfidf_doc[word] = round(tf_score * idf_scores[word],2)
             else:
                 tfidf_doc[word] = 0
         

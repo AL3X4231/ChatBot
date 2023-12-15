@@ -20,6 +20,7 @@ def intersection_qst_corpus(qst,matrix):
 listfilescleaned = os.listdir(path="cleaned")
 
 def TF_question(question,matrice):
+    idf_dic=IDF('cleaned')
     for i in matrice.keys():
         matrice[i]=[0,0,0,0,0,0,0,0]
     words=intersection_qst_corpus(question,matrice)
@@ -36,6 +37,9 @@ def TF_question(question,matrice):
                         occ+=1
                 TF_per_word[file]=occ
                 matrice[word]=TF_per_word
-            
+    for i in words:
+        for j in range(len(matrice[i])):
+            matrice[i][j]=round(idf_dic[i]*matrice[i][j],2)
     return matrice
+
 print(TF_question('décentralisation relança? avez',matrix()))
