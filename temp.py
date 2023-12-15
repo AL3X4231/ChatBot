@@ -42,4 +42,16 @@ def TF_question(question,matrice):
             matrice[i][j]=round(idf_dic[i]*matrice[i][j],2)
     return matrice
 
-print(TF_question('décentralisation relança? avez',matrix()))
+def produit_sclalaire(matriceA,matriceB):
+    matrice_inter={}
+    liste_result=[]
+    for key in matriceA.keys():
+        matrice_inter[key]=[0]*8
+        for value in range(8):
+            matrice_inter[key][value]=matriceA[key][value]*matriceB[key][value]
+    for i in range(8):
+        sum=0
+        for j in matrice_inter.keys():
+            sum+=matrice_inter[j][i]
+        liste_result.append(sum)
+    return liste_result
