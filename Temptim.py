@@ -116,6 +116,14 @@ def generation_qestion(question):
         for sentence in sentences:
             if highest_TFIDF_score in sentence:
                 return(sentence)
-print(generation_qestion("Peux-tu me dire comment une nation peut-elle prendre soin du climat ?"))
+#print(generation_qestion("Peux-tu me dire comment une nation peut-elle prendre soin du climat ?"))
 
+question="""Nos différences ne doivent pas devenir des divisions.
+Nos diversités des discordes."""
+matrice=matrix()
+mat_qst=TFIDF_question(question,matrice)
+listfiles=os.listdir("speeches")
+
+sim=similarité(matrix(),mat_qst,listfiles)
+print(sim)
 
