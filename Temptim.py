@@ -24,7 +24,7 @@ def intersection_qst_corpus(qst,matrix):
 
 
       
-def TF_question(question,matrice):
+def TFIDF_question(question,matrice):
     idf_dic=IDF('cleaned')
     for i in matrice.keys():
         matrice[i]=[0,0,0,0,0,0,0,0]
@@ -46,7 +46,6 @@ def TF_question(question,matrice):
         for j in range(len(matrice[i])):
             matrice[i][j]=round(idf_dic[i]*matrice[i][j],2)
     return matrice
-   
 
 def produit_scalaire(matriceA,matriceB):
     matrice_inter={}
@@ -74,12 +73,10 @@ def norme(matrix):
         norme_vec[i]=sqrt(norme_vec[i])
     return(norme_vec)
         
-def similarité():
-    matA=matrix()
-    matB=TF_question(question,matrix())
-    produit_scal=produit_scalaire(matA,matB)
+def similarité(matA,mat_question,listfichier):
+    produit_scal=produit_scalaire(matA,mat_question)
     normeA=norme(matA)
-    normeB=norme(matB)
+    normeB=norme(mat_question)
     similar_mat=[]
     
     for i in range(len(produit_scal)):
@@ -94,25 +91,31 @@ def similarité():
             maxi=similar_mat[i]
             maxi_index=i
     
-    listfichier=os.listdir('speeches')
     doc_similaire=listfichier[maxi_index]
     return(doc_similaire)
-        
 
-question="""'Le monde entier a regardé notre élection présidentielle.
-Partout, on se demandait si les Français allaient décider à leur tour de se replier sur le passé illusoire, s'ils allaient rompre avec la marche du monde, quitter la scène de l'Histoire, céder à la défiance démocratique, l'esprit de division et tourner le dos aux Lumières, ou si au contraire ils allaient embrasser l'avenir, se donner collectivement un nouvel élan, réaffirmer leur foi dans les valeurs qui ont fait d'eux un grand peuple.
-Le 7 mai, les Français ont choisi.
-Qu'ils en soient ici remerciés.
-La responsabilité qu'ils m'ont confiée est un honneur, dont je mesure la gravité.
-Le monde et l'Europe ont aujourd'hui, plus que jamais, besoin de la France.
-Ils ont besoin d'une France forte et sûre de son destin.
-Ils ont besoin d'une France qui porte haut la voix de la liberté et de la solidarité.
-Ils ont besoin d'une France qui sache inventer l'avenir.
-Le monde a besoin de ce que les Françaises et les Français lui ont toujours enseigné : l'audace de la liberté, l'exigence de l'égalité, la volonté de la fraternité.
-Or, depuis des décennies, la France doute d'elle-même.
-Elle se sent menacée dans sa culture, dans son modèle social, dans ses croyances profondes.
-Elle doute de ce qui l'a faite."""
-similar=(similarité())
+def generation_qestion(question):
+    TFIDF_of_question=TFIDF_question(question,matrix())
+    for word,Tfidf in TFIDF_of_question.items():
+        average=0     
+        for j in range(8):
+            average+=Tfidf[j]
+        TFIDF_of_question[word]=round((average/8),2)
+    all_average=[]
+    for averages in TFIDF_of_question.values():
+        all_average.append(averages)
+        max_average=max(all_average)
+    for word in TFIDF_of_question.keys():
+        if TFIDF_of_question[word]==max_average:
+            highest_TFIDF_score=word
+    listfichier=os.listdir('speeches')
+    relevant_document=similarité(matrix(),TFIDF_of_question,listfichier)
+    with open(relevant_document,'r') as document:
+        sentences=document.read()
+        sentences=document.split()
+        for sentence in sentences:
+            if highest_TFIDF_score in sentence:
+                return(sentence)
+print(generation_qestion("Peux-tu me dire comment une nation peut-elle prendre soin du climat ?"))
 
-print(similar)
-    
+
