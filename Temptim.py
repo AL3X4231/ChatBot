@@ -7,11 +7,8 @@ qst="Miterrand, climat, guerre, poule"
 def tokenisation(question):
     question=question.lower()
     for i in range(len(question)):
-        print(ord(question[i]))
-        print(question[i])
-        if ord(question[i])<97 or ord(question[i])>122:
+        if (ord(question[i])<97 or ord(question[i])>122) and ord(question[i])<128:
             question=question.replace(question[i],' ')
-            print(question)
     separated_words=question.split()
     return(separated_words)
 
@@ -24,13 +21,9 @@ def intersection_qst_corpus(qst,matrix):
     return(intersection)
 
 
-matrix_e=matrix()
 
-intersection=intersection_qst_corpus(qst,matrix_e)
 
-dicti={'le':[0,1,0,1,0,2,3,9],'ruban':[0,1,0,1,0,2,3,9],'est':[0,1,0,1,0,2,3,9],'bleu':[0,1,0,1,0,2,3,9]}
-
-            
+      
 def TF_question(question,matrice):
     idf_dic=IDF('cleaned')
     for i in matrice.keys():
@@ -54,20 +47,29 @@ def TF_question(question,matrice):
             matrice[i][j]=round(idf_dic[i]*matrice[i][j],2)
     return matrice
    
-    
-print(intersection)
 
-def produit_scalaire():
-    return [9,5,25,15,49]
+def produit_scalaire(matriceA,matriceB):
+    matrice_inter={}
+    liste_result=[]
+    for key in matriceA.keys():
+        matrice_inter[key]=[0]*8
+        for value in range(8):
+            matrice_inter[key][value]=matriceA[key][value]*matriceB[key][value]
+    for i in range(8):
+        sum=0
+        for j in matrice_inter.keys():
+            sum+=matrice_inter[j][i]
+        liste_result.append(sum)
+    return liste_result
 
 def norme(matrix):
     norme_vec=[]
     for i in range(len(matrix[next(iter(matrix))])):
         sum=0
         for j,y in matrix.items():
-            sum+=y[i]^2
+            
+            sum+=y[i]**2
         norme_vec.append(sum)
-    print(norme_vec)
     for i in range(len(norme_vec)):
         norme_vec[i]=sqrt(norme_vec[i])
     return(norme_vec)
@@ -78,12 +80,39 @@ def similarité():
     produit_scal=produit_scalaire(matA,matB)
     normeA=norme(matA)
     normeB=norme(matB)
-    similarité_mat=[]
+    similar_mat=[]
+    
     for i in range(len(produit_scal)):
-        similarité=(produit_scal[i])/(normeA[i]*normeB[i])
-        similarité_mat.append(similarité)
-    return(similarité_mat)
+        similar=0
+        if normeB[i]!=0:
+            similar=(produit_scal[i])/(normeA[i]*normeB[i])
+        similar_mat.append(similar)
+        
+    maxi=0
+    for i in range(len(similar_mat)):
+        if similar_mat[i]>maxi:
+            maxi=similar_mat[i]
+            maxi_index=i
+    
+    listfichier=os.listdir('speeches')
+    doc_similaire=listfichier[maxi_index]
+    return(doc_similaire)
         
 
-question='décentralisation relança? avez'
-#dic={'gar':[1,2,4,1,8,7,3,4],'noir':[1,4,9,1,8,7,3,4],'nigeria':[1,2,4,9,8,7,3,4]}
+question="""'Le monde entier a regardé notre élection présidentielle.
+Partout, on se demandait si les Français allaient décider à leur tour de se replier sur le passé illusoire, s'ils allaient rompre avec la marche du monde, quitter la scène de l'Histoire, céder à la défiance démocratique, l'esprit de division et tourner le dos aux Lumières, ou si au contraire ils allaient embrasser l'avenir, se donner collectivement un nouvel élan, réaffirmer leur foi dans les valeurs qui ont fait d'eux un grand peuple.
+Le 7 mai, les Français ont choisi.
+Qu'ils en soient ici remerciés.
+La responsabilité qu'ils m'ont confiée est un honneur, dont je mesure la gravité.
+Le monde et l'Europe ont aujourd'hui, plus que jamais, besoin de la France.
+Ils ont besoin d'une France forte et sûre de son destin.
+Ils ont besoin d'une France qui porte haut la voix de la liberté et de la solidarité.
+Ils ont besoin d'une France qui sache inventer l'avenir.
+Le monde a besoin de ce que les Françaises et les Français lui ont toujours enseigné : l'audace de la liberté, l'exigence de l'égalité, la volonté de la fraternité.
+Or, depuis des décennies, la France doute d'elle-même.
+Elle se sent menacée dans sa culture, dans son modèle social, dans ses croyances profondes.
+Elle doute de ce qui l'a faite."""
+similar=(similarité())
+
+print(similar)
+    
