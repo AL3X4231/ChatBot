@@ -1,5 +1,8 @@
-from TFIDF import*
-import os
+from fonctionality import *
+from TFIDF import *
+from math import sqrt
+
+qst="Miterrand, climat, guerre, poule"
 
 def tokenisation(question):
     question=question.lower()
@@ -17,9 +20,11 @@ def intersection_qst_corpus(qst,matrix):
             intersection.append(i)
     return(intersection)
 
-listfilescleaned = os.listdir(path="cleaned")
 
-def TF_question(question,matrice):
+
+
+      
+def TFIDF_question(question,matrice):
     idf_dic=IDF('cleaned')
     for i in matrice.keys():
         matrice[i]=[0,0,0,0,0,0,0,0]
@@ -42,7 +47,7 @@ def TF_question(question,matrice):
             matrice[i][j]=round(idf_dic[i]*matrice[i][j],2)
     return matrice
 
-def produit_sclalaire(matriceA,matriceB):
+def produit_scalaire(matriceA,matriceB):
     matrice_inter={}
     liste_result=[]
     for key in matriceA.keys():
@@ -55,3 +60,60 @@ def produit_sclalaire(matriceA,matriceB):
             sum+=matrice_inter[j][i]
         liste_result.append(sum)
     return liste_result
+
+def norme(matrix):
+    norme_vec=[]
+    for i in range(len(matrix[next(iter(matrix))])):
+        sum=0
+        for j,y in matrix.items():
+            
+            sum+=y[i]**2
+        norme_vec.append(sum)
+    for i in range(len(norme_vec)):
+        norme_vec[i]=sqrt(norme_vec[i])
+    return(norme_vec)
+        
+def similarité(matA,mat_question,listfichier):
+    produit_scal=produit_scalaire(matA,mat_question)
+    normeA=norme(matA)
+    normeB=norme(mat_question)
+    similar_mat=[]
+    
+    for i in range(len(produit_scal)):
+        similar=0
+        if normeB[i]!=0:
+            similar=(produit_scal[i])/(normeA[i]*normeB[i])
+        similar_mat.append(similar)
+        
+    maxi=0
+    for i in range(len(similar_mat)):
+        if similar_mat[i]>maxi:
+            maxi=similar_mat[i]
+            maxi_index=i
+    
+    doc_similaire=listfichier[maxi_index]
+    return(doc_similaire)
+
+def generation_question(question):
+    TFIDF_of_question=TFIDF_question(question,matrix())
+    print(TFIDF_of_question)
+    word_high_idf=''
+    highest_TFIDF_score=0
+    for word,Tfidf in TFIDF_of_question.items():
+        for j in range(8):
+            if Tfidf[j]>highest_TFIDF_score:
+                word_high_idf=word
+                highest_TFIDF_score=Tfidf[j]
+    print(word_high_idf) 
+    listfichier=os.listdir('speeches')
+    relevant_document=similarité(matrix(),TFIDF_of_question,listfichier)
+    print(relevant_document)
+    with open('speeches/'+relevant_document,'r',encoding='utf-8') as document:
+        sentences=document.read()
+        sentences=sentences.split('.')
+        for sentence in sentences:
+            if word_high_idf in sentence:
+                sentence=sentence.capitalize()+'.'
+                return(sentence)
+print(generation_question("Peux-tu me dire comment une nation peut-elle prendre soin du climat ?"))
+
