@@ -96,7 +96,6 @@ def similarité(matA,mat_question,listfichier):
 
 def generation_question(question):
     TFIDF_of_question=TFIDF_question(question,matrix())
-    print(TFIDF_of_question)
     word_high_idf=''
     highest_TFIDF_score=0
     for word,Tfidf in TFIDF_of_question.items():
@@ -104,16 +103,15 @@ def generation_question(question):
             if Tfidf[j]>highest_TFIDF_score:
                 word_high_idf=word
                 highest_TFIDF_score=Tfidf[j]
-    print(word_high_idf) 
     listfichier=os.listdir('speeches')
     relevant_document=similarité(matrix(),TFIDF_of_question,listfichier)
-    print(relevant_document)
     with open('speeches/'+relevant_document,'r',encoding='utf-8') as document:
         sentences=document.read()
         sentences=sentences.split('.')
         for sentence in sentences:
             if word_high_idf in sentence:
-                sentence=sentence.capitalize()+'.'
+                sentence.capitalize()
+                sentence=sentence+'.'
                 return(sentence)
-print(generation_question("Peux-tu me dire comment une nation peut-elle prendre soin du climat ?"))
+print(generation_question("mission connerie"))
 
