@@ -127,3 +127,13 @@ listfiles=os.listdir("speeches")
 sim=similarité(matrix(),mat_qst,listfiles)
 print(sim)
 
+
+Starter={
+ "Comment": "Après analyse, ",
+ "Pourquoi": "Car, ",
+ "Peux-tu": "Oui, bien sûr!"
+}
+for i in Starter:
+    if i in answer:
+        answer=Starter[i][answer]
+
