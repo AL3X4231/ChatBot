@@ -12,7 +12,7 @@ Starter={
 }
 
 
-def president():
+def president():   # This function make the list of president
 
     list_president=[]
     for i in listfiles:
@@ -306,7 +306,7 @@ def norme(matrix):
     return(norme_vec)
 
 
-def similarity(matA,mat_question,listfichier):
+def similarity(matA,mat_question):
     produit_scal=produit_scalaire(matA,mat_question)
     normeA=norme(matA)
     normeB=norme(mat_question)
@@ -318,6 +318,10 @@ def similarity(matA,mat_question,listfichier):
             similar=(produit_scal[i])/(normeA[i]*normeB[i])
         similar_mat.append(similar)
         
+    return(similar_mat)
+
+def relevant_doc(matA,mat_question,listfichier):
+    similar_mat=similarity(matA,mat_question)
     maxi=0
     maxi_index=0
     for i in range(len(similar_mat)):
@@ -327,7 +331,7 @@ def similarity(matA,mat_question,listfichier):
             maxi_index=i
     
     doc_similaire=listfichier[maxi_index]
-    return(doc_similaire)
+    return doc_similaire
 
 def generating_answer(question):
     TFIDF_of_question=TFIDF_question(question,matrix())
@@ -342,7 +346,7 @@ def generating_answer(question):
                 word_high_idf=word
                 highest_TFIDF_score=Tfidf[j]
     listfiles=os.listdir('speeches')
-    relevant_document=similarity(matrix(),TFIDF_of_question,listfiles)
+    relevant_document=relevant_doc(matrix(),TFIDF_of_question,listfiles)
     with open('speeches/'+relevant_document,'r',encoding='utf-8') as document:
         sentences=document.read()
         sentences=sentences.split('.')
@@ -356,10 +360,9 @@ def generating_answer(question):
                         answer=Starter[starters]+answer
                     else:
                         answer=answer.capitalize()
-            else:
-                answer='Je suis désolé, le corpus ne fait pas mention cela'
-            return answer
-            
+                    return answer
+        answer='Je suis désolé, le corpus ne fait pas mention cela'
+        return answer    
 
 
 
