@@ -2,7 +2,6 @@ from fonctionality import *
 from TFIDF import *
 from math import sqrt
 
-qst="Miterrand, climat, guerre, poule"
 
 def tokenisation(question):
     question=question.lower()
@@ -65,15 +64,14 @@ def norme(matrix):
     norme_vec=[]
     for i in range(len(matrix[next(iter(matrix))])):
         sum=0
-        for j,y in matrix.items():
-            
-            sum+=y[i]**2
+        for values in matrix.values():
+            sum+=values[i]**2
         norme_vec.append(sum)
     for i in range(len(norme_vec)):
         norme_vec[i]=sqrt(norme_vec[i])
     return(norme_vec)
         
-def similarité(matA,mat_question,listfichier):
+def similarity(matA,mat_question,listfichier):
     produit_scal=produit_scalaire(matA,mat_question)
     normeA=norme(matA)
     normeB=norme(mat_question)
@@ -94,7 +92,7 @@ def similarité(matA,mat_question,listfichier):
     doc_similaire=listfichier[maxi_index]
     return(doc_similaire)
 
-def generation_question(question):
+def generating_answer(question):
     TFIDF_of_question=TFIDF_question(question,matrix())
     word_high_idf=''
     highest_TFIDF_score=0
@@ -103,15 +101,30 @@ def generation_question(question):
             if Tfidf[j]>highest_TFIDF_score:
                 word_high_idf=word
                 highest_TFIDF_score=Tfidf[j]
-    listfichier=os.listdir('speeches')
-    relevant_document=similarité(matrix(),TFIDF_of_question,listfichier)
+    listfiles=os.listdir('speeches')
+    relevant_document=similarity(matrix(),TFIDF_of_question,listfiles)
     with open('speeches/'+relevant_document,'r',encoding='utf-8') as document:
         sentences=document.read()
         sentences=sentences.split('.')
-        for sentence in sentences:
-            if word_high_idf in sentence:
-                sentence.capitalize()
-                sentence=sentence+'.'
-                return(sentence)
-print(generation_question("mission connerie"))
+        for answer in sentences:
+            if word_high_idf in answer:
+                
+                answer=answer+'.'
+                answer=answer.replace('\n','')
+                for starters in Starter.keys():
+                    if starters in question:
+                        answer=Starter[starters]+answer
+                    else:
+                        answer=answer.capitalize()
+                return(answer)
 
+
+question=""""Pourquoi doit on sauver le climat?"""
+
+Starter={
+ "Comment": "Après analyse, ",
+ "Pourquoi": "Car, ",
+ "Peux-tu": "Oui, bien sûr!"
+}   
+
+print(generating_answer(question))
