@@ -40,6 +40,8 @@ def president():
 for i in range(len(listfiles)):
     ponctuation=['!','"','#','$','%','&','x²','()','*','+',',','- ','.','/',':',';','<','=','>','?','@','[',']','^','_','`','{','|','}','~']
     contractions = {"de":"d'","le":"l'","qui":"qu'","à le": "au", "à les": "aux", "de le": "du", "de les": "des", "je ai": "j'ai", "que il": "qu'il", "que elle": "qu'elle", "qui il": "qu'il", "qui elle": "qu'elle", "ne est": "n'est", "ce est": "c'est", "ce ont": "ont"}
+    accents_mapping = {'à': 'a', 'á': 'a', 'â': 'a', 'ã': 'a', 'ä': 'a', 'å': 'a', 'è': 'e', 'é': 'e', 'ê': 'e', 'ë': 'e', 'ì': 'i', 'í': 'i', 'î': 'i', 'ï': 'i', 'ò': 'o', 'ó': 'o', 'ô': 'o', 'õ': 'o', 'ö': 'o', 'ù': 'u', 'ú': 'u', 'û': 'u', 'ü': 'u', 'ý': 'y', 'ÿ': 'y', 'ç': 'c', 'ñ': 'n'}
+
     file=open('speeches/'+listfiles[i],"r",encoding='utf8')
     lignes=file.readlines()
     texte_minuscule=''
@@ -49,6 +51,10 @@ for i in range(len(listfiles)):
         for key, value in contractions.items():
                 if value in j:
                     j = j.replace(value, key+' ')
+        for letter_with_accent, letter_without_accent in accents_mapping.items():
+            if letter_with_accent in j:
+                j = j.replace(letter_with_accent, letter_without_accent)
+
         for k in j:
             if k in ponctuation:
                     texte_minuscule+=''
@@ -61,7 +67,6 @@ for i in range(len(listfiles)):
     f.write(texte_minuscule)
     f.close()
 
-#Partie 3 bonus question 1
 
 def leastimportant(matrix,format):
     leastimp=[]
@@ -273,7 +278,6 @@ def TFIDF_question(question,matrice):
         for j in range(len(matrice[i])):
             matrice[i][j]=round(idf_dic[i]*matrice[i][j],2)
     return matrice
-
 
 def produit_scalaire(matriceA,matriceB):
     matrice_inter={}
