@@ -43,6 +43,8 @@ for i in range(len(listfiles)):
     file=open('speeches/'+listfiles[i],"r",encoding='utf8')
     lignes=file.readlines()
     texte_minuscule=''
+
+    
     for j in lignes:
         for key, value in contractions.items():
                 if value in j:
@@ -55,7 +57,6 @@ for i in range(len(listfiles)):
             else:
                 texte_minuscule+=k.lower()
         
-
     f = open(f"cleaned/{listfiles[i]}", "w",encoding='utf8')
     f.write(texte_minuscule)
     f.close()

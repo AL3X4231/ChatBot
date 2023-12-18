@@ -38,6 +38,7 @@ def IDF(directory):
             idf_scores[word] =(math.log10(nb_fichier / (count+1)))
             if idf_scores[word]<0:
                 idf_scores[word]=0
+        print(word, idf_scores[word])
     
     return(idf_scores)
 
