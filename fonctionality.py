@@ -45,6 +45,8 @@ for i in range(len(listfiles)):
     file=open('speeches/'+listfiles[i],"r",encoding='utf8')
     lignes=file.readlines()
     texte_minuscule=''
+
+    
     for j in lignes:
         for key, value in contractions.items():
                 if value in j:
@@ -61,7 +63,6 @@ for i in range(len(listfiles)):
             else:
                 texte_minuscule+=k.lower()
         
-
     f = open(f"cleaned/{listfiles[i]}", "w",encoding='utf8')
     f.write(texte_minuscule)
     f.close()
@@ -318,7 +319,9 @@ def similarity(matA,mat_question,listfichier):
         similar_mat.append(similar)
         
     maxi=0
+    maxi_index=0
     for i in range(len(similar_mat)):
+        
         if similar_mat[i]>maxi:
             maxi=similar_mat[i]
             maxi_index=i
@@ -344,8 +347,8 @@ def generating_answer(question):
         sentences=document.read()
         sentences=sentences.split('.')
         for answer in sentences:
-            if word_high_idf in answer:
-                
+            answer_list=answer.split()
+            if word_high_idf in answer_list:
                 answer=answer+'.'
                 answer=answer.replace('\n','')
                 for starters in Starter.keys():
@@ -353,9 +356,10 @@ def generating_answer(question):
                         answer=Starter[starters]+answer
                     else:
                         answer=answer.capitalize()
-                if answer is None:
-                    answer='Je suis désolé, le corpus ne fait pas mention cela'
-                return(answer)
+            else:
+                answer='Je suis désolé, le corpus ne fait pas mention cela'
+            return answer
+            
 
 
 
