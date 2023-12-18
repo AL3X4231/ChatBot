@@ -39,10 +39,14 @@ def president():
 
 for i in range(len(listfiles)):
     ponctuation=['!','"','#','$','%','&','x²','()','*','+',',','- ','.','/',':',';','<','=','>','?','@','[',']','^','_','`','{','|','}','~']
+    contractions = {"de":"d'","le":"l'","qui":"qu'","à le": "au", "à les": "aux", "de le": "du", "de les": "des", "je ai": "j'ai", "que il": "qu'il", "que elle": "qu'elle", "qui il": "qu'il", "qui elle": "qu'elle", "ne est": "n'est", "ce est": "c'est", "ce ont": "ont"}
     file=open('speeches/'+listfiles[i],"r",encoding='utf8')
     lignes=file.readlines()
     texte_minuscule=''
     for j in lignes:
+        for key, value in contractions.items():
+                if value in j:
+                    j = j.replace(value, key+' ')
         for k in j:
             if k in ponctuation:
                     texte_minuscule+=''
@@ -50,10 +54,13 @@ for i in range(len(listfiles)):
                 texte_minuscule+=' '
             else:
                 texte_minuscule+=k.lower()
+        
 
     f = open(f"cleaned/{listfiles[i]}", "w",encoding='utf8')
     f.write(texte_minuscule)
     f.close()
+
+#Partie 3 bonus question 1
 
 def leastimportant(matrix,format):
     leastimp=[]
