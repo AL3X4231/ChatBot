@@ -138,3 +138,4 @@ for i in Starter:
         answer=Starter[i][answer]
 
 
+terminaisons = ['a','it','e', 'es', 'e', 'ons', 'ez', 'ent','is', 'is', 'it', 'issons', 'issez', 'issent','s', 's', '', 'ons', 'ez', 'ent','ai', 'as', 'a', 'ons', 'ez', 'ont','ai', 'as', 'a', 'ons', 'ez', 'ont','ai', 'as', 'a', 'ons', 'ez', 'ont']
