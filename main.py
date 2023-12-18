@@ -70,6 +70,7 @@ while True:
         answer=generating_answer(question)
         print(answer)
             
+            
     if choice==8:
         print(menu)
             

@@ -319,7 +319,9 @@ def similarity(matA,mat_question,listfichier):
         similar_mat.append(similar)
         
     maxi=0
+    maxi_index=0
     for i in range(len(similar_mat)):
+        
         if similar_mat[i]>maxi:
             maxi=similar_mat[i]
             maxi_index=i
@@ -345,8 +347,8 @@ def generating_answer(question):
         sentences=document.read()
         sentences=sentences.split('.')
         for answer in sentences:
-            if word_high_idf in answer:
-                
+            answer_list=answer.split()
+            if word_high_idf in answer_list:
                 answer=answer+'.'
                 answer=answer.replace('\n','')
                 for starters in Starter.keys():
@@ -354,9 +356,10 @@ def generating_answer(question):
                         answer=Starter[starters]+answer
                     else:
                         answer=answer.capitalize()
-                if answer is None:
-                    answer='Je suis désolé, le corpus ne fait pas mention cela'
-                return(answer)
+            else:
+                answer='Je suis désolé, le corpus ne fait pas mention cela'
+            return answer
+            
 
 
 
