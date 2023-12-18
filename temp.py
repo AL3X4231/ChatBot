@@ -35,7 +35,6 @@ def TFIDF_question(question,matrice):
                 occ=0
                 content=doc.read()
                 content=content.split()
-
                 for i in content:
                     if i==word:
                         occ+=1
