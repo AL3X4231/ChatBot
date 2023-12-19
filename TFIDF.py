@@ -4,7 +4,7 @@ from collections import defaultdict
 
 listfilescleaned = os.listdir(path="cleaned")
 
-def Tf(sentence):
+def Tf(sentence):   #calculate the fre
 
     words = sentence.split()
 
@@ -18,10 +18,9 @@ def Tf(sentence):
     return word_dict
 
 
-def IDF(directory):
+def IDF(directory):   #Calculate the Idf of the corpus
     documents=os.listdir(directory)
-    nb_fichier = len(documents)  # Correction ici, utiliser 'docs' au lieu de 'fichier'
-
+    nb_fichier = len(documents)  
     count_doc = defaultdict(int)
     idf_scores = defaultdict(float)
 
@@ -43,7 +42,7 @@ def IDF(directory):
 
 
 
-def TFIDF(directory):
+def TFIDF(directory): #calculate the tfidf of the corpus
     
     documents = os.listdir(directory)
     score_tfidf={}
@@ -68,7 +67,7 @@ def TFIDF(directory):
     return score_tfidf
 
     
-def matrix():
+def matrix():    #Create the matrix of tfidf
     score_tfidf = TFIDF('cleaned') 
 
     matrice = {}

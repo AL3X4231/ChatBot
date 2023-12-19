@@ -237,7 +237,7 @@ def commun_words_between_presidents():  #mot commun entre les presidents
 
 #part 2
 
-def tokenisation(question):
+def tokenisation(question):   #reformate la question
     question=question.lower()
     for i in range(len(question)):
         if (ord(question[i])<97 or ord(question[i])>122) and ord(question[i])<128:
@@ -245,7 +245,7 @@ def tokenisation(question):
     separated_words=question.split()
     return(separated_words)
 
-def intersection_qst_corpus(qst,matrix):
+def intersection_qst_corpus(qst,matrix):   #find the word that are both in the corpus and in the question
     qst=tokenisation(qst)
     intersection=[]
     for i in qst:
@@ -254,7 +254,7 @@ def intersection_qst_corpus(qst,matrix):
     return(intersection)
 
 
-def TFIDF_question(question,matrice):
+def TFIDF_question(question,matrice):   #calculate the tfidf of the question
     idf_dic=IDF('cleaned')
     for i in matrice.keys():
         matrice[i]=[0,0,0,0,0,0,0,0]
@@ -279,7 +279,7 @@ def TFIDF_question(question,matrice):
             matrice[i][j]=round(idf_dic[i]*matrice[i][j],2)
     return matrice
 
-def produit_scalaire(matriceA,matriceB):
+def produit_scalaire(matriceA,matriceB):  #calculate the scalar product between 2 matrix
     matrice_inter={}
     liste_result=[]
     for key in matriceA.keys():
@@ -294,7 +294,7 @@ def produit_scalaire(matriceA,matriceB):
     return liste_result
 
 
-def norme(matrix):
+def norme(matrix):   #calculate the norme of any matrix
     norme_vec=[]
     for i in range(len(matrix[next(iter(matrix))])):
         sum=0
@@ -306,7 +306,7 @@ def norme(matrix):
     return(norme_vec)
 
 
-def similarity(matA,mat_question):
+def similarity(matA,mat_question):  #calculate the similarity of each doc with the qst
     produit_scal=produit_scalaire(matA,mat_question)
     normeA=norme(matA)
     normeB=norme(mat_question)
@@ -320,7 +320,7 @@ def similarity(matA,mat_question):
         
     return(similar_mat)
 
-def relevant_doc(matA,mat_question,listfichier):
+def relevant_doc(matA,mat_question,listfichier):   #find the relevant doc 
     similar_mat=similarity(matA,mat_question)
     maxi=0
     maxi_index=0
@@ -333,7 +333,7 @@ def relevant_doc(matA,mat_question,listfichier):
     doc_similaire=listfichier[maxi_index]
     return doc_similaire
 
-def generating_answer(question):
+def generating_answer(question):   #generate the answer for the user 
     contractions = {"de":"d'","le":"l'","qui":"qu'","à le": "au", "à les": "aux", "de le": "du", "de les": "des", "je ai": "j'ai", "que il": "qu'il", "que elle": "qu'elle", "qui il": "qu'il", "qui elle": "qu'elle", "ne est": "n'est", "ce est": "c'est", "ce ont": "ont"}
     for key,value in contractions.items():
         if value in question:
@@ -351,7 +351,6 @@ def generating_answer(question):
                 highest_TFIDF_score=Tfidf[j]
     listfiles=os.listdir('speeches')
     relevant_document=relevant_doc(matrix(),TFIDF_of_question,listfiles)
-    print(word_high_idf,highest_TFIDF_score,relevant_document)
     with open('speeches/'+relevant_document,'r',encoding='utf-8') as document:
         sentences=document.read()
         sentences=sentences.split('.')
@@ -368,7 +367,3 @@ def generating_answer(question):
                     return answer
         answer='Je suis désolé, le corpus ne fait pas mention cela'
         return answer    
-
-
-
-print(generating_answer('Peut tu me dire comment prendre soins de climat'))
