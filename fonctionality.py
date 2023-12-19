@@ -334,6 +334,10 @@ def relevant_doc(matA,mat_question,listfichier):
     return doc_similaire
 
 def generating_answer(question):
+    contractions = {"de":"d'","le":"l'","qui":"qu'","à le": "au", "à les": "aux", "de le": "du", "de les": "des", "je ai": "j'ai", "que il": "qu'il", "que elle": "qu'elle", "qui il": "qu'il", "qui elle": "qu'elle", "ne est": "n'est", "ce est": "c'est", "ce ont": "ont"}
+    for key,value in contractions.items():
+        if value in question:
+            question = question.replace(value, key+' ')
     TFIDF_of_question=TFIDF_question(question,matrix())
     if len(TFIDF_of_question)==0:
         answer='Je suis désolé, le corpus ne fait pas mention cela'
