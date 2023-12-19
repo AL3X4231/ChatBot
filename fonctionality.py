@@ -37,7 +37,7 @@ def president():   # This function make the list of president
     return(list_president)
 
 
-for i in range(len(listfiles)):
+for i in range(len(listfiles)):   #cleaned all docs
     ponctuation=['!','"','#','$','%','&','x²','()','*','+',',','- ','.','/',':',';','<','=','>','?','@','[',']','^','_','`','{','|','}','~']
     contractions = {"de":"d'","le":"l'","qui":"qu'","à le": "au", "à les": "aux", "de le": "du", "de les": "des", "je ai": "j'ai", "que il": "qu'il", "que elle": "qu'elle", "qui il": "qu'il", "qui elle": "qu'elle", "ne est": "n'est", "ce est": "c'est", "ce ont": "ont"}
     accents_mapping = {'à': 'a', 'á': 'a', 'â': 'a', 'ã': 'a', 'ä': 'a', 'å': 'a', 'è': 'e', 'é': 'e', 'ê': 'e', 'ë': 'e', 'ì': 'i', 'í': 'i', 'î': 'i', 'ï': 'i', 'ò': 'o', 'ó': 'o', 'ô': 'o', 'õ': 'o', 'ö': 'o', 'ù': 'u', 'ú': 'u', 'û': 'u', 'ü': 'u', 'ý': 'y', 'ÿ': 'y', 'ç': 'c', 'ñ': 'n'}
@@ -68,7 +68,7 @@ for i in range(len(listfiles)):
     f.close()
 
 
-def leastimportant(matrix,format):
+def leastimportant(matrix,format):  #fonctionnality one return the least important word
     leastimp=[]
     res='The least important word are : \n'
     for i,y in matrix.items():
@@ -85,7 +85,7 @@ def leastimportant(matrix,format):
     else:
         return(leastimp)
 
-def highest_tfidf(matrix):
+def highest_tfidf(matrix):     #return the highest tfidf
     max={'':0}
     for i,y in matrix.items():
         localmax=0
@@ -106,7 +106,7 @@ def highest_tfidf(matrix):
     return res
 
 
-def mostrepeated():
+def mostrepeated():   #The most reapeated word by a president
     with open("cleaned/Nomination_Chirac1.txt","r",encoding='utf8') as document1:
         sentence1=document1.read()
     with open("cleaned/Nomination_Chirac2.txt","r",encoding='utf8') as document2:
@@ -122,7 +122,7 @@ def mostrepeated():
             word.append(i)
     return word
 
-def mostspoke(word,list_files):
+def mostspoke(word,list_files):  #The one who spoke about it the most
         idf=IDF('cleaned')
         matrice=matrix()
         spoke={}
@@ -173,7 +173,7 @@ def mostspoke(word,list_files):
         return(list_president)
 
 
-def firstone(dico):
+def firstone(dico):    #order of mandat of president
     if dico==False:
         first=False
     else:
@@ -192,7 +192,7 @@ def firstone(dico):
 
 
 
-def commun_words_between_presidents():
+def commun_words_between_presidents():  #mot commun entre les presidents
         listefilescleaned=os.listdir('cleaned')
         with open(f'cleaned/{listefilescleaned[0]}',"r",encoding='utf8') as document1:
             sentence0=document1.read()
@@ -347,6 +347,7 @@ def generating_answer(question):
                 highest_TFIDF_score=Tfidf[j]
     listfiles=os.listdir('speeches')
     relevant_document=relevant_doc(matrix(),TFIDF_of_question,listfiles)
+    print(word_high_idf,highest_TFIDF_score,relevant_document)
     with open('speeches/'+relevant_document,'r',encoding='utf-8') as document:
         sentences=document.read()
         sentences=sentences.split('.')
@@ -366,3 +367,4 @@ def generating_answer(question):
 
 
 
+print(generating_answer('Peut tu me dire comment prendre soins de climat'))
