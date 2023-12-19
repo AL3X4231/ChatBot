@@ -12,7 +12,7 @@ Starter={
 }
 
 
-def president():
+def president():   # This function make the list of president
 
     list_president=[]
     for i in listfiles:
@@ -37,7 +37,7 @@ def president():
     return(list_president)
 
 
-for i in range(len(listfiles)):
+for i in range(len(listfiles)):   #cleaned all docs
     ponctuation=['!','"','#','$','%','&','x²','()','*','+',',','- ','.','/',':',';','<','=','>','?','@','[',']','^','_','`','{','|','}','~']
     contractions = {"de":"d'","le":"l'","qui":"qu'","à le": "au", "à les": "aux", "de le": "du", "de les": "des", "je ai": "j'ai", "que il": "qu'il", "que elle": "qu'elle", "qui il": "qu'il", "qui elle": "qu'elle", "ne est": "n'est", "ce est": "c'est", "ce ont": "ont"}
     accents_mapping = {'à': 'a', 'á': 'a', 'â': 'a', 'ã': 'a', 'ä': 'a', 'å': 'a', 'è': 'e', 'é': 'e', 'ê': 'e', 'ë': 'e', 'ì': 'i', 'í': 'i', 'î': 'i', 'ï': 'i', 'ò': 'o', 'ó': 'o', 'ô': 'o', 'õ': 'o', 'ö': 'o', 'ù': 'u', 'ú': 'u', 'û': 'u', 'ü': 'u', 'ý': 'y', 'ÿ': 'y', 'ç': 'c', 'ñ': 'n'}
@@ -68,7 +68,7 @@ for i in range(len(listfiles)):
     f.close()
 
 
-def leastimportant(matrix,format):
+def leastimportant(matrix,format):  #fonctionnality one return the least important word
     leastimp=[]
     res='The least important word are : \n'
     for i,y in matrix.items():
@@ -85,7 +85,7 @@ def leastimportant(matrix,format):
     else:
         return(leastimp)
 
-def highest_tfidf(matrix):
+def highest_tfidf(matrix):     #return the highest tfidf
     max={'':0}
     for i,y in matrix.items():
         localmax=0
@@ -106,7 +106,7 @@ def highest_tfidf(matrix):
     return res
 
 
-def mostrepeated():
+def mostrepeated():   #The most reapeated word by a president
     with open("cleaned/Nomination_Chirac1.txt","r",encoding='utf8') as document1:
         sentence1=document1.read()
     with open("cleaned/Nomination_Chirac2.txt","r",encoding='utf8') as document2:
@@ -122,7 +122,7 @@ def mostrepeated():
             word.append(i)
     return word
 
-def mostspoke(word,list_files):
+def mostspoke(word,list_files):  #The one who spoke about it the most
         idf=IDF('cleaned')
         matrice=matrix()
         spoke={}
@@ -173,7 +173,7 @@ def mostspoke(word,list_files):
         return(list_president)
 
 
-def firstone(dico):
+def firstone(dico):    #order of mandat of president
     if dico==False:
         first=False
     else:
@@ -192,7 +192,7 @@ def firstone(dico):
 
 
 
-def commun_words_between_presidents():
+def commun_words_between_presidents():  #mot commun entre les presidents
         listefilescleaned=os.listdir('cleaned')
         with open(f'cleaned/{listefilescleaned[0]}',"r",encoding='utf8') as document1:
             sentence0=document1.read()
@@ -306,7 +306,7 @@ def norme(matrix):
     return(norme_vec)
 
 
-def similarity(matA,mat_question,listfichier):
+def similarity(matA,mat_question):
     produit_scal=produit_scalaire(matA,mat_question)
     normeA=norme(matA)
     normeB=norme(mat_question)
@@ -318,6 +318,10 @@ def similarity(matA,mat_question,listfichier):
             similar=(produit_scal[i])/(normeA[i]*normeB[i])
         similar_mat.append(similar)
         
+    return(similar_mat)
+
+def relevant_doc(matA,mat_question,listfichier):
+    similar_mat=similarity(matA,mat_question)
     maxi=0
     maxi_index=0
     for i in range(len(similar_mat)):
@@ -327,7 +331,7 @@ def similarity(matA,mat_question,listfichier):
             maxi_index=i
     
     doc_similaire=listfichier[maxi_index]
-    return(doc_similaire)
+    return doc_similaire
 
 def generating_answer(question):
     TFIDF_of_question=TFIDF_question(question,matrix())
@@ -342,7 +346,8 @@ def generating_answer(question):
                 word_high_idf=word
                 highest_TFIDF_score=Tfidf[j]
     listfiles=os.listdir('speeches')
-    relevant_document=similarity(matrix(),TFIDF_of_question,listfiles)
+    relevant_document=relevant_doc(matrix(),TFIDF_of_question,listfiles)
+    print(word_high_idf,highest_TFIDF_score,relevant_document)
     with open('speeches/'+relevant_document,'r',encoding='utf-8') as document:
         sentences=document.read()
         sentences=sentences.split('.')
@@ -356,10 +361,10 @@ def generating_answer(question):
                         answer=Starter[starters]+answer
                     else:
                         answer=answer.capitalize()
-            else:
-                answer='Je suis désolé, le corpus ne fait pas mention cela'
-            return answer
-            
+                    return answer
+        answer='Je suis désolé, le corpus ne fait pas mention cela'
+        return answer    
 
 
 
+print(generating_answer('Peut tu me dire comment prendre soins de climat'))
