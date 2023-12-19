@@ -33,6 +33,7 @@ The program offers the following functionalities:
 4. **Indicate the name(s) of the president(s) who spoke about the "Nation" and the one who repeated it the most.**
 5. **Indicate the first president to talk about climate and/or ecology.**
 6. **Display the word(s) that all presidents have mentioned.**
+7. **Ask the ChatBot any question.**
 
 ## Usage
 
@@ -43,8 +44,8 @@ Run the main program `main.py` and follow the menu instructions to access differ
 - Follow-up 1 Date: Week of 13/11/2023
 - First Submission: 26/11/2023 at 23:59
 - Follow-up 2 Date: Week of 27/11/2023
-- Final Submission: 17/12/2023 at 23:59
-- Presentation: Week of 18/12/2023
+- Final Submission: 19/12/2023 at 10:20
+- Presentation: Week of 22/12/2023
 
 ## Contact
 
