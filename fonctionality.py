@@ -367,4 +367,4 @@ def generating_answer(question):
 
 
 
-print(generating_answer('Peut tu me dire comment prendre soins de climat'))
+print(generating_answer('Peux-tu me dire comment une nation peut-elle prendre soin de climat'))
